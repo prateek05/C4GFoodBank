@@ -98,22 +98,100 @@
                 private Foodbank data.
             </p>
             <hr>
-            <h3>Feedback Mechanism</h3>
+            <h3>Mode of Operation / Feedback Mechanism</h3>
             <p>
                 We are planning to create an MVP version of this solution that we then run by the
-                client (Kevin) for feedback and iteration, in agile style workflow. Ideally we would like to
-                have a single Agent do a trial run
-                of this during the semester for true feedback.
+                client (Kevin) for feedback and iteration, in agile style workflow. We will function as a fully
+                agile team. The first kick off with the organization being our understanding of the minimum viable
+                product and incorporate amendments till there is a basic agreement. The development life cycle will
+                be quick weekly sprints with each sprint readout with our TA Dante and the client partner if
+                available. The read-out would demonstrate the current solution and gain feedback, incorporate the
+                feedback change in the next feedback cycle. Any feedback occurring during the sprint cycle in
+                session would get logged in the backlog before they are picked up in the next weekly sprint.
+                Ideally we would like to have a single agency participate in an alpha test run of this during the
+                semester for real world assessment.
             </p>
             <hr>
-            Team's development process is as follows:
+            <h3> Development Life Cycle </h3>
+            <p>
+                We will be using a GIT based service like Github for our code repository and documentation. Development
+                will
+                follow the standard branch from develop, commit as often as you can and create a pull request for
+                review.
+                Each pull request would contain the unit test cases and on merging with development branch would have to
+                get
+                approved by the peer reviewer of the pull request. End of each sprint would call for develop branch
+                merging
+                into
+                main branch would call for performing the end to end integration test cases. Initially we might start
+                with
+                performing these tests manually and use GitHub Project Planning to keep a journal on the test conducted
+                and
+                passed. If time permits we will add a continuous integration agent to our repo to automate the unit test
+                cases. Additionally, the test cases will keep expanding till we have sufficient code coverage to build
+                trust
+                in our software. The deployment would be based on dockerized containers. The code repo will have the
+                docker
+                config and end of each sprint a weekly container build will be checked into docker central. We aim to be
+                compute system agnostic and our client partner shares that vision with us.
+            </p>
+            <hr>
+
+            <h3>Mode of Operation / Feedback Mechanism</h3>
+            <p>
+                We are planning to create an MVP version of this solution that we then run by the
+                client (Kevin) for feedback and iteration, in agile style workflow. We will function as a fully
+                agile team. The first kick off with the organization being our understanding of the minimum viable
+                product and incorporate amendments till there is a basic agreement. The development life cycle will
+                be quick weekly sprints with each sprint readout with our TA Dante and the client partner if
+                available. The read-out would demonstrate the current solution and gain feedback, incorporate the
+                feedback change in the next feedback cycle. Any feedback occurring during the sprint cycle in
+                session would get logged in the backlog before they are picked up in the next weekly sprint.
+                Ideally we would like to have a single agency participate in an alpha test run of this during the
+                semester for real world assesment.
+            </p>
+            <hr>
+            <h3> Development Life Cycle </h3>
+            <p>
+                We will be using a GIT based service like Github for our code repository and documentation. Development
+                will follow the standard branch from develop, commit as often as you can and create a pull request for
+                review. Each pull request would contain the unit test cases and on merging with development branch would
+                have to
+                get merged by the peer reviewer of the pull request. End of each sprint would call for a develop merging
+                into main branch would call for performing the end to end integration test cases. Initially we might
+                start
+                with performing these tests manually and use GitHub Project Planning to keep a journal on the test
+                conducted
+                and passed. If time permits we will add a continuous integration agent to our repo to automate the unit
+                test
+                cases. Additionally, the test cases will keep expanding till we have sufficient code coverage to build
+                trust in our software. The deployment would be based on dockerized containers. The code repo will have
+                the
+                docker config and end of each sprint a weekly container build will be checked into docker central. We
+                aim to be
+                computing system agnostic and our client partner shares that vision with us.
+
+            </p>
+            <h5> Alpha Test Rollout </h5>
+            <p>
             <ul>
-                <li>Development MVP</li>
-                <li>Test MVP</li>
-                <li>Present MVP to client</li>
-                <li>Gauge feedback (Maybe get a trial run in the real world)</li>
-                <li>Repeat</li>
+                <li>Develop MVP</li>
+                <li>Deploy MVP</li>
+                <li>Alpha Test MVP with client</li>
+                <li>Collect real world user experience and issues</li>
+                <li>Improvise the solution</li>
             </ul>
+            </p>
+            <hr>
+            <h3> Team Members and Responsibilities </h3>
+
+            <p> We are a very cross-functional team so any responsibilities and role associated here would either rotate
+                or
+                adjust based on our weekly progress to our individual commitments. The non-binding nature is to
+                incorporate
+                continuous improvement and bring forward our maximum potential as a team and not any specific
+                individual.
+            </p>
             <table>
                 <tr>
                     <th>Name</th>
@@ -121,15 +199,15 @@
                 </tr>
                 <tr>
                     <td>Douglas Scott Morgan</td>
-                    <td>Fullstack Developer/Project Lead</td>
+                    <td>Scrum leader / Full stack development</td>
                 </tr>
                 <tr>
                     <td>Prahalad Sanjeev Varma</td>
-                    <td>Fullstack Developer</td>
+                    <td>UI/UX research and development</td>
                 </tr>
                 <tr>
                     <td>Prateek Baranwal</td>
-                    <td>Fullstack Developer</td>
+                    <td>Backend application development and deployment</td>
                 </tr>
                 <tr>
                     <td>Vinayak (Vin) Ajit Nesarikar</td>
@@ -137,18 +215,20 @@
                 </tr>
             </table>
             <hr>
-            <h3>Current System Design Choices</h3>
+            <h3>Initial Design Architecture</h3>
+            The design choices are based on initial understanding of the scope of the problem and is subjected to
+            change.
             <ul>
-                <li>Mobile/desktop accessible Webpage (Written in React.js)</li>
-                <li>Django Python Server Backend</li>
-                <li>Postgres Database</li>
-                <li>Likely Dockerized for easier hand off to the client</li>
+                <li>Frontend responsive webapp written in react js framework to be multi-screen compatible</li>
+                <li>Django/Flask based python server for API backend</li>
+                <li>Postgres Database with ORM adapters with backend</li>
+                <li>Dockerize images for deployment builds and orchestration</li>
             </ul>
             </p>
         </section>
 
         <footer>
-            Food Bank is maintained by <a href="https://github.gatech.edu/C4G-FoodBank">C4G-FoodBank</a><br>
+            Food Bank is maintained by GTech C4G Coursework Team <a href="https://github.com/prateek05/C4GFoodBank">C4G-FoodBank</a><br>
             Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
