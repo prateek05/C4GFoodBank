@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta content="chrome=1" http-equiv="X-UA-Compatible">
@@ -14,76 +15,146 @@
 </head>
 
 <body>
-<div id="container">
-    <div class="inner">
+    <div id="container">
+        <div class="inner">
 
-        <header>
-            <h1>Food Bank</h1>
-            <h2></h2>
-        </header>
+            <header>
+                <h1>Food Bank</h1>
+                <h2></h2>
+            </header>
 
-        <section class="clearfix" id="downloads">
-            <a class="button" href="https://github.com/prateek05/C4GFoodBank"
-               id="view-on-github"><span>View on GitHub</span></a>
-        </section>
+            <section class="clearfix" id="downloads">
+                <a class="button" href="https://github.com/prateek05/C4GFoodBank" id="view-on-github"><span>View on
+                        GitHub</span></a>
+            </section>
 
-        <hr>
-
-        <section id="main_content">
-            <p>
-            <h1> Food Bank Last Mile Survey System</h1>
             <hr>
 
-            <div>
-                <h2> Team </h2>
+            <section id="main_content">
+                <p>
+                <h1> Food Bank Last Mile Survey System</h1>
+                <hr>
+
+                <div>
+                    <h2> Team </h2>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                        <tr>
+                            <td>Vinayak (Vin) Ajit Nesarikar</td>
+                            <td>vnesarikar3@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>Prateek Baranwal</td>
+                            <td>pbaranwal3@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>Prahalad Sanjeev Varma</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Douglas Scott Morgan</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <br>
+                <hr>
+                <h3> Partner Info </h3>
+                <p>
+                    The Harry Chapin Food Bank of Southwest Florida is the partner organization for this project whose
+                    mission is to end hunger in their coverage area.
+                    The Food Bank is organized as a hub and spoke model. The main Food Bank headquarters aggregates all
+                    of the donations of both money and food. At this headquarters they then distribute the food to what
+                    they call “agents” which are the spokes of the model. The agents are actual organizations that
+                    distribute the food to people in need which are called “clients”. The agent organizations can range
+                    from a few individuals who just want to help to full organizations such as a Salvation Army
+                    location.
+                </p>
+                <hr>
+                <h3>Problem Statement</h3>
+                <p>
+                    The Food Bank has a number of important data stores that power their operations such as the Donor
+                    data,
+                    Volunteer information and internal employee information. One of more critical pieces of information
+                    is
+                    the Agent data stores which contain all of the aggregated reports. While the Food Bank has a lot of
+                    great data, what they lack is last-mile data. In this particular case, the client does not have data
+                    around the satisfaction of the food being delivered. For example the client wants to explicitly know
+                    “Was the food damaged?”, “How was the quality?”, etc. The client further wants to aggregate this
+                    data
+                    around client types at a generic level (no PII).
+                </p>
+                <hr>
+                <h3>Proposed Solution</h3>
+                <p>
+                    The team is proposing a survey solution that can be supplied to either the Agents or Clients to
+                    collect the desired last mile data. This solution will likely be deployed as a progressive web
+                    application that can be used on either computers or mobile phones. This data will ideally be
+                    delivered directly back to the client's internal databases for analysis cross referenced with
+                    private Foodbank data.
+                </p>
+                <hr>
+                <h3>Feedback Mechanism</h3>
+                <p>
+                    We are planning to create an MVP version of this solution that we then run by the
+                    client (Kevin) for feedback and iteration, in agile style workflow. Ideally we would like to
+                    have a single Agent do a trial run
+                    of this during the semester for true feedback.
+                </p>
+                <hr>
+                Team's development process is as follows:
+                <ul>
+                    <li>Development MVP</li>
+                    <li>Test MVP</li>
+                    <li>Present MVP to client</li>
+                    <li>Gauge feedback (Maybe get a trial run in the real world) </li>
+                    <li>Repeat</li>
+                </ul>
                 <table>
                     <tr>
                         <th>Name</th>
-                        <th>Email</th>
-                    </tr>
-                    <tr>
-                        <td>Vinayak (Vin) Ajit Nesarikar</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Prateek Baranwal</td>
-                        <td>pbaranwal3@gatech.edu</td>
-                    </tr>
-                    <tr>
-                        <td>Prahalad Sanjeev Varma</td>
-                        <td></td>
+                        <th>Role</th>
                     </tr>
                     <tr>
                         <td>Douglas Scott Morgan</td>
-                        <td></td>
+                        <td>Fullstack Developer/Project Lead</td>
+                    </tr>
+                    <tr>
+                        <td>Prahalad Sanjeev Varma</td>
+                        <td>Fullstack Developer</td>
+                    </tr>
+                    <tr>
+                        <td>Prateek Baranwal</td>
+                        <td>Fullstack Developer</td>
+                    </tr>
+                    <tr>
+                        <td>Vinayak (Vin) Ajit Nesarikar</td>
+                        <td>Fullstack Developer</td>
                     </tr>
                 </table>
-            </div>
-            <br>
-            <br>
-            A concise presentation of the partner organization, its work, needs and challenges it faces.
-            <hr>
-            What specific need(s) you will address
-            <hr>
-            What your solution would look like to the intended users (i.e., members of the partner organization or
-            their "clients"). Include details on what functionalities the system you will put in place will include
-            <hr>
-            How you will elicit and incorporate feedback from the partner organization and other stakeholders in
-            your project
-            <hr>
-            The plan for development, evaluation and deployment (including individual team member roles)
-            <hr>
-            Some specifics about your design/development choices to the extent that you can make them now
-            </p>
-        </section>
+                <hr>
+                <h3>Current System Design Choices</h3>
+                <ul>
+                    <li>Mobile/desktop accessible Webpage (Written in React.js)</li>
+                    <li>Django Python Server Backend</li>
+                    <li>Postgres Database</li>
+                    <li>Likely Dockerized for easier hand off to the client</li>
+                </ul>
+                </p>
+            </section>
 
-        <footer>
-            Food Bank is maintained by <a href="https://github.gatech.edu/C4G-FoodBank">C4G-FoodBank</a><br>
-            Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+            <footer>
+                Food Bank is maintained by <a href="https://github.gatech.edu/C4G-FoodBank">C4G-FoodBank</a><br>
+                Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+            </footer>
 
 
+        </div>
     </div>
-</div>
 </body>
+
 </html>
