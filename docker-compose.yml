@@ -1,0 +1,39 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres:14.0-alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: ./app
+    command: gunicorn -b 0.0.0.0 -p 8000 food_bank_survey.wsgi:application
+    volumes:
+      - ./app/:/usr/src/app/
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  
+  frontend:
+    build: ./frontend/food_bank_survey
+    volumes:
+      - ./frontend/food_bank_survey:/app
+      # One-way volume to use node_modules from inside image
+      - /app/node_modules
+      - /etc/nginx/conf.d
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - web
+
+volumes:
+    static_volume: {}
