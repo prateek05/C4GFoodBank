@@ -71,7 +71,7 @@ class Campaign(models.Model):
     ]
     campaign_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, null=False)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=False)
     questions = models.ManyToManyField(Question)
     sites = models.ManyToManyField("users.AgencySite")
     create_by = models.ForeignKey(
@@ -83,7 +83,23 @@ class Campaign(models.Model):
     )
     actor_type = models.CharField(max_length=25, null=True, choices=ACTOR_TYPE_CHOICES)
     active = models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    deleted_at = models.DateTimeField()
+
+#Site QRCode Model
+class QRCode(models.Model):
+    class Meta:
+        db_table = "qr_codes"
+
+    slug = models.SlugField(null=False)
     qr_code_path = models.URLField()
+    site = models.ForeignKey(
+        "users.AgencySite", on_delete=models.SET_NULL, blank=True, null=True, related_name="qr_codes"
+    )
+    campaign = models.ForeignKey(
+        Campaign, on_delete=models.SET_NULL, blank=True, null=True, related_name="qr_codes"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField()
