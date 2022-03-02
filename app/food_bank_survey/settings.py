@@ -130,3 +130,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# The user auth model to leverage 
+AUTH_USER_MODEL = 'users.CampaignUser'

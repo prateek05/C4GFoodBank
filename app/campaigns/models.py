@@ -21,7 +21,7 @@ class Question(models.Model):
     additional_info = models.CharField(max_length=1000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
     create_by = models.ForeignKey(
         "users.CampaignUser",
         on_delete=models.SET_NULL,
@@ -55,7 +55,7 @@ class Response(models.Model):
     location = models.CharField(max_length=200, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
 
 
 # Campaign Model
@@ -85,7 +85,7 @@ class Campaign(models.Model):
     active = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
 
 #Site QRCode Model
 class QRCode(models.Model):
@@ -102,4 +102,4 @@ class QRCode(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
