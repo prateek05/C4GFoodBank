@@ -71,7 +71,6 @@ class Campaign(models.Model):
     ]
     campaign_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, null=False)
-    slug = models.SlugField(null=False)
     questions = models.ManyToManyField(Question)
     sites = models.ManyToManyField("users.AgencySite")
     create_by = models.ForeignKey(
