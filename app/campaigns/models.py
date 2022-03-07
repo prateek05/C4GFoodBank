@@ -86,18 +86,27 @@ class Campaign(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)
 
-#Site QRCode Model
+
+# Site QRCode Model
 class QRCode(models.Model):
     class Meta:
         db_table = "qr_codes"
 
-    slug = models.SlugField(null=False)
+    slug = models.CharField(null=False, max_length=200)
     qr_code_path = models.URLField()
     site = models.ForeignKey(
-        "users.AgencySite", on_delete=models.SET_NULL, blank=True, null=True, related_name="qr_codes"
+        "users.AgencySite",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="qr_codes",
     )
     campaign = models.ForeignKey(
-        Campaign, on_delete=models.SET_NULL, blank=True, null=True, related_name="qr_codes"
+        Campaign,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="qr_codes",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('campaigns', '0003_alter_campaign_deleted_at_alter_qrcode_deleted_at_and_more'),
+        (
+            "campaigns",
+            "0003_alter_campaign_deleted_at_alter_qrcode_deleted_at_and_more",
+        ),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='campaign',
-            name='slug',
+            model_name="campaign",
+            name="slug",
         ),
     ]

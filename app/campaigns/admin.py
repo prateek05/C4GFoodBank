@@ -1,10 +1,11 @@
 from django.contrib import admin
 
-from campaigns.models import Campaign, Question, Response, QRCode
+from campaigns.models import Campaign, QRCode, Question, Response
 
 
 class QRCodeAdmin(admin.ModelAdmin):
     readonly_fields = ["created_at", "updated_at", "deleted_at"]
+
 
 class CampaignAdmin(admin.ModelAdmin):
     readonly_fields = ["created_at", "updated_at", "deleted_at"]

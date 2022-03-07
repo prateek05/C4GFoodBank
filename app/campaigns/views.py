@@ -2,7 +2,7 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import Question, Response, Campaign, QRCode
+from .models import Campaign, QRCode, Question, Response
 from .serializers import UserSerializer
 
 
@@ -38,4 +38,3 @@ def survey(request) -> Response:
             kwargs={"sequence": sequence, "user_id": user_id}
         )
         return Response(status=status.HTTP_204_NO_CONTENT)
-

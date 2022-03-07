@@ -1,7 +1,7 @@
 import uuid
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 # User model
@@ -23,6 +23,7 @@ class AgencySite(models.Model):
         db_table = "agency_sites"
 
     site_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=200, null=False)
     latitude = models.DecimalField(max_digits=10, decimal_places=4)
     longitude = models.DecimalField(max_digits=10, decimal_places=4)
     address = models.CharField(max_length=200, null=False)
