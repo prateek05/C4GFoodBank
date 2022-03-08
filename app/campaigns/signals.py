@@ -18,7 +18,7 @@ def init_new_qr_code(instance, action, reverse, model, **kwargs):
             )
             if not path.isfile(qr_code_path):
                 slug = f"{instance.campaign_id}/{site.site_id}"
-                url = f"{settings.BASE_URL}/{slug}"
+                url = f"{settings.BASE_URL}/api/survey/{slug}"
                 img = qrcode.make(f"{url}")
                 img.save(qr_code_path)
                 QRCode.objects.create(

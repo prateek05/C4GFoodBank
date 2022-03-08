@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 
+LANGUAGE_TYPES = [("EN", "English")]
 
 # Campaign Questions Info Model
 class Question(models.Model):
@@ -9,12 +10,12 @@ class Question(models.Model):
         db_table = "questions"
 
     TEMPLATE_TYPES = [("text", "Text"), ("radio", "Radio"), ("check", "CheckBox")]
-    LANGUAGE_TYPES = [("EN", "English")]
-    questionn_id = models.UUIDField(
+    
+    question_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
     question = models.CharField(max_length=1000, null=False, blank=False)
-    answer_choices = models.CharField(max_length=1000, null=False, blank=False)
+    answer_choices = models.CharField(max_length=1000, null=False, blank=True)
     answer_template = models.CharField(max_length=25, null=True, choices=TEMPLATE_TYPES)
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     active = models.BooleanField()
@@ -44,13 +45,14 @@ class Response(models.Model):
         null=True,
         related_name="responses",
     )
-    site_id = models.ForeignKey(
+    site = models.ForeignKey(
         "users.AgencySite",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name="responses",
     )
+    language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     value = models.CharField(max_length=1000, null=False)
     location = models.CharField(max_length=200, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -93,7 +95,7 @@ class QRCode(models.Model):
         db_table = "qr_codes"
 
     slug = models.CharField(null=False, max_length=200)
-    qr_code_path = models.URLField()
+    qr_code_path = models.ImageField()
     site = models.ForeignKey(
         "users.AgencySite",
         on_delete=models.SET_NULL,

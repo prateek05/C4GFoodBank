@@ -75,6 +75,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            'libraries' : {
+                'staticfiles': 'django.templatetags.static', 
+            }
         },
     },
 ]
@@ -136,7 +139,7 @@ BASE_URL = os.environ.get("BASE_URL", default="localhost:8000")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -145,3 +148,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # The user auth model to leverage
 AUTH_USER_MODEL = "users.CampaignUser"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
+STATIC_ROOT=os.path.join(BASE_DIR, "static")
+# SECURE_SSL_REDIRECT = True

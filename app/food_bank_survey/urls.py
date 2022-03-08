@@ -13,9 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.urls import re_path as url
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
+from rest_framework_swagger.views import get_swagger_view
+
+from campaigns import views as surveyViews
+
+
+
+schema_url_patterns = [
+    path("api/survey", surveyViews.survey, name="survey"),
+]
+
+schema_view = get_swagger_view(title="Survey API", patterns=schema_url_patterns)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("openapi/", schema_view, name="openapi-schema"),
+    path("api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"),
 ]
