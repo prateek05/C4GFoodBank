@@ -19,7 +19,6 @@ lint:
 	docker-compose exec web isort .  
 	docker-compose exec web black .  
 
-
 #tests the backend
 test:
 	docker-compose restart
@@ -38,3 +37,11 @@ migrations:
 #Stops containers
 stop: 
 	docker-compose stop
+
+#install dependencies
+install:
+	docker-compose exec web pip install -r requirements.txt
+
+#view web container logs
+logs:
+	docker-compose logs -f  web

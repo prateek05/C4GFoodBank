@@ -14,18 +14,25 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+QR_CODE_STORAGE_LOCATION = os.environ.get(
+    "QR_CODE_STORAGE_LOCATION", default=f"{BASE_DIR}/qr_codes"
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^8ocy$+4b@(v(=sx9ch79!8o3*m(4h%z0$y&73%*x7!@4!c_q+"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    default="django-insecure-^8ocy$+4b@(v(=sx9ch79!8o3*m(4h%z0$y&73%*x7!@4!c_q+",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get(
+    "DJANGO_ALLOWED_HOSTS", default="0.0.0.0,localhost"
+).split(",")
 
 
 # Application definition
@@ -68,6 +75,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            'libraries' : {
+                'staticfiles': 'django.templatetags.static', 
+            }
         },
     },
 ]
@@ -120,13 +130,30 @@ USE_I18N = True
 
 USE_TZ = True
 
+os.environ["HTTPS"] = "on"
+
+
+BASE_URL = os.environ.get("BASE_URL", default="localhost:8000")
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# The user auth model to leverage
+AUTH_USER_MODEL = "users.CampaignUser"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
+STATIC_ROOT=os.path.join(BASE_DIR, "static")
+# SECURE_SSL_REDIRECT = True

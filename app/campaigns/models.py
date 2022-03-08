@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 
+LANGUAGE_TYPES = [("EN", "English")]
 
 # Campaign Questions Info Model
 class Question(models.Model):
@@ -9,19 +10,19 @@ class Question(models.Model):
         db_table = "questions"
 
     TEMPLATE_TYPES = [("text", "Text"), ("radio", "Radio"), ("check", "CheckBox")]
-    LANGUAGE_TYPES = [("EN", "English")]
-    questionn_id = models.UUIDField(
+    
+    question_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
     question = models.CharField(max_length=1000, null=False, blank=False)
-    answer_choices = models.CharField(max_length=1000, null=False, blank=False)
+    answer_choices = models.CharField(max_length=1000, null=False, blank=True)
     answer_template = models.CharField(max_length=25, null=True, choices=TEMPLATE_TYPES)
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     active = models.BooleanField()
     additional_info = models.CharField(max_length=1000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
     create_by = models.ForeignKey(
         "users.CampaignUser",
         on_delete=models.SET_NULL,
@@ -44,18 +45,19 @@ class Response(models.Model):
         null=True,
         related_name="responses",
     )
-    site_id = models.ForeignKey(
+    site = models.ForeignKey(
         "users.AgencySite",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name="responses",
     )
+    language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     value = models.CharField(max_length=1000, null=False)
     location = models.CharField(max_length=200, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
 
 
 # Campaign Model
@@ -71,7 +73,6 @@ class Campaign(models.Model):
     ]
     campaign_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, null=False)
-    slug = models.SlugField(null=True)
     questions = models.ManyToManyField(Question)
     sites = models.ManyToManyField("users.AgencySite")
     create_by = models.ForeignKey(
@@ -83,7 +84,32 @@ class Campaign(models.Model):
     )
     actor_type = models.CharField(max_length=25, null=True, choices=ACTOR_TYPE_CHOICES)
     active = models.BooleanField()
-    qr_code_path = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(null=True)
+
+
+# Site QRCode Model
+class QRCode(models.Model):
+    class Meta:
+        db_table = "qr_codes"
+
+    slug = models.CharField(null=False, max_length=200)
+    qr_code_path = models.ImageField()
+    site = models.ForeignKey(
+        "users.AgencySite",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="qr_codes",
+    )
+    campaign = models.ForeignKey(
+        Campaign,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="qr_codes",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    deleted_at = models.DateTimeField(null=True)
