@@ -13,7 +13,7 @@ services:
     # command: python manage.py runserver
     volumes:
       - ./app/:/usr/src/app/
-      - static_volume:/app/static
+      - static_volume:/usr/src/app/django_static
     ports:
       - "8000:8000"
     expose:
@@ -29,7 +29,7 @@ services:
       - ./frontend/food_bank_survey:/app
       # One-way volume to use node_modules from inside image
       - /app/node_modules
-      - static_volume:/app/static
+      - static_volume:/usr/src/app/django_static
       - /etc/nginx/conf.d
     ports:
       - "80:80"
