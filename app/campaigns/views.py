@@ -20,7 +20,7 @@ def is_valid_uuid(value):
 geolocator = Nominatim(user_agent="food_bank_survey")
 post_request_body = openapi.Schema(title="SurveyResponse", description="Survey Response Data", type=openapi.TYPE_OBJECT, properties={"coordinates": openapi.Schema(type=openapi.TYPE_STRING), "question_id":openapi.Schema(type=openapi.TYPE_STRING), "value": openapi.Schema(type=openapi.TYPE_STRING), "language": openapi.Schema(type=openapi.TYPE_STRING) }, required=["coordinates", "question_id", "value", "language"] )
 get_response = openapi.Response('survey get response', SurveySerializer)
-#Add swagger https://drf-yasg.readthedocs.io/en/stable/readme.html#usage then unit test and make script to seed data base and add azure library to store qr codes and grab url to store
+#then unit test and make script to seed data base
 
 # Returns the survey data and stores the survey response
 @swagger_auto_schema(method='get', responses={200: get_response, 400: "Bad request"})

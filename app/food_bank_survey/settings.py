@@ -164,3 +164,14 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False
 }
 
+ACCOUNT_URL = os.environ.get(
+    "ACCOUNT_URL", default=None
+)
+
+ACCOUNT_ACCESS_KEY = os.environ.get(
+    "ACCOUNT_ACCESS_KEY", default=None
+)
+
+ACCOUNT_ACCESS_KEY = os.environ.get(
+    "QR_CODE_CONTAINER", default=None
+)
