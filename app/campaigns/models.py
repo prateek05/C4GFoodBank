@@ -54,7 +54,7 @@ class Response(models.Model):
     )
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     value = models.CharField(max_length=1000, null=False)
-    location = models.CharField(max_length=200, null=False)
+    location = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)

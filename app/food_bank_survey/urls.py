@@ -18,19 +18,27 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
-
 from campaigns import views as surveyViews
 
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 
 schema_url_patterns = [
-    path("api/survey", surveyViews.survey, name="survey"),
+    path("api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"),
 ]
 
-schema_view = get_swagger_view(title="Survey API", patterns=schema_url_patterns)
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Survey API",
+      default_version='v1',
+   ),
+   patterns=schema_url_patterns
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("openapi/", schema_view, name="openapi-schema"),
+    path("openapi/", schema_view.with_ui('swagger', cache_timeout=0) , name="openapi-schema"),
     path("api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"),
 ]

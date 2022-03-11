@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "campaigns.apps.CampaignsConfig",
     "rest_framework",
     "rest_framework_swagger",
+    "drf_yasg"
 ]
 
 MIDDLEWARE = [
@@ -155,5 +156,11 @@ REST_FRAMEWORK = {
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
+
 STATIC_ROOT=os.path.join(BASE_DIR, "django_static")
 # SECURE_SSL_REDIRECT = True
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False
+}
+
