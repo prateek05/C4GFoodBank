@@ -34,7 +34,7 @@ export default function Survey() {
   const [currentQue, setCurrentQue] = useState({});
   const [currentQueNum, setCurrentQueNum] = useState(0);
   const [response, setResponse] = useState([]);
-  const [currentAns, setCurrentAns] = useState({});
+  const [currentAns, setCurrentAns] = useState({ value: "" });
   const [dataLoad, setDataLoad] = useState(false);
   const [completeFlag, setCompleteFlag] = useState(false);
 
@@ -63,7 +63,7 @@ export default function Survey() {
       question_id: currentQue.question_id,
       value: currentAns.value,
       language: currentQue.language,
-      coordinate: loc,
+      coordinates: loc,
     };
 
     const nextNum = currentQueNum + 1;
@@ -71,7 +71,7 @@ export default function Survey() {
       setResponse([answer, ...response]);
       setCurrentQueNum(nextNum);
       setCurrentQue(campaign[nextNum]);
-      setCurrentAns({});
+      setCurrentAns({ value: "" });
     } else {
       setCompleteFlag(true);
       const finalAnswer = [answer, ...response];
@@ -96,6 +96,10 @@ export default function Survey() {
     setLocation({
       loaded: true,
       error: true,
+      coords: {
+        lat: 0,
+        lng: 0,
+      },
     });
   };
 
@@ -143,22 +147,31 @@ export default function Survey() {
                 />
               )}
               {currentQue.answer_template === "radio" && (
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  name="radio-buttons-group"
-                  onChange={(e) => setCurrentAns({ value: e.target.value })}
+                <Grid
+                  container
+                  direction="column"
+                  justifyContent="flex-start"
+                  alignItems="center"
                 >
-                  {currentQue.answer_choices.split(",").map((choice, index) => {
-                    return (
-                      <FormControlLabel
-                        value={choice}
-                        key={index}
-                        control={<Radio />}
-                        label={choice}
-                      />
-                    );
-                  })}
-                </RadioGroup>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group"
+                    onChange={(e) => setCurrentAns({ value: e.target.value })}
+                  >
+                    {currentQue.answer_choices
+                      .split(",")
+                      .map((choice, index) => {
+                        return (
+                          <FormControlLabel
+                            value={choice}
+                            key={index}
+                            control={<Radio />}
+                            label={choice}
+                          />
+                        );
+                      })}
+                  </RadioGroup>
+                </Grid>
               )}
             </Grid>
             <Grid
