@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "campaigns.apps.CampaignsConfig",
     "rest_framework",
     "rest_framework_swagger",
-    "drf_yasg"
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -76,9 +76,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
-            'libraries' : {
-                'staticfiles': 'django.templatetags.static', 
-            }
+            "libraries": {
+                "staticfiles": "django.templatetags.static",
+            },
         },
     },
 ]
@@ -158,21 +158,13 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
-STATIC_ROOT=os.path.join(BASE_DIR, "django_static")
+STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
 # SECURE_SSL_REDIRECT = True
 
-SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False
-}
+SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
-ACCOUNT_URL = os.environ.get(
-    "ACCOUNT_URL", default=None
-)
+ACCOUNT_URL = os.environ.get("ACCOUNT_URL", default=None)
 
-ACCOUNT_ACCESS_KEY = os.environ.get(
-    "ACCOUNT_ACCESS_KEY", default=None
-)
+ACCOUNT_ACCESS_KEY = os.environ.get("ACCOUNT_ACCESS_KEY", default=None)
 
-ACCOUNT_ACCESS_KEY = os.environ.get(
-    "QR_CODE_CONTAINER", default=None
-)
+ACCOUNT_ACCESS_KEY = os.environ.get("QR_CODE_CONTAINER", default=None)

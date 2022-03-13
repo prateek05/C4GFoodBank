@@ -35,4 +35,4 @@ class AgencySite(models.Model):
     deleted_at = models.DateTimeField(null=True)
 
     def __str__(self):
-        return f'Site {self.name}'
+        return f"Site {self.name}"

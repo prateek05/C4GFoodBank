@@ -10,12 +10,15 @@ class Question(models.Model):
         db_table = "questions"
 
     TEMPLATE_TYPES = [("text", "Text"), ("radio", "Radio"), ("check", "CheckBox")]
-    
-    question_id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False
-    )
+
+    question_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     question = models.CharField(max_length=1000, null=False, blank=False)
-    answer_choices = models.CharField(max_length=1000, null=False, blank=True, help_text="Example choice format for a radio or check answer template ['Red','Blue','Green']")
+    answer_choices = models.CharField(
+        max_length=1000,
+        null=False,
+        blank=True,
+        help_text="Example choice format for a radio or check answer template: 'Red','Blue','Green'",
+    )
     answer_template = models.CharField(max_length=25, null=True, choices=TEMPLATE_TYPES)
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     active = models.BooleanField()
@@ -30,8 +33,9 @@ class Question(models.Model):
         null=True,
         related_name="questions_created",
     )
+
     def __str__(self):
-        return f'Question: {self.question} id: {self.question_id}'
+        return f"Question: {self.question} id: {self.question_id}"
 
 
 # Response Info Model
@@ -91,7 +95,7 @@ class Campaign(models.Model):
     deleted_at = models.DateTimeField(null=True)
 
     def __str__(self):
-        return f'Campaign {self.name}'
+        return f"Campaign {self.name}"
 
 
 # Site QRCode Model

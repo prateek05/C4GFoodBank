@@ -33,4 +33,3 @@
 #         assert response.status_code == status.HTTP_201_CREATED
 #         user = User.objects.get(name="new_fake", email="new_fake@fake.com")
 #         assert user.id == response.data["id"]
-
