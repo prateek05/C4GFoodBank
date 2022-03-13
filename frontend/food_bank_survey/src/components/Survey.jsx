@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import {
   Grid,
   Paper,
@@ -11,6 +13,11 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
+  const api = axios.create({
+    baseURL: `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/`,
+  });
+
+  const { campaignId, siteId } = useParams();
   const paperStyle = {
     padding: 20,
     // height: "vh",
@@ -28,24 +35,30 @@ export default function Survey() {
   const [currentQueNum, setCurrentQueNum] = useState(0);
   const [response, setResponse] = useState([]);
   const [currentAns, setCurrentAns] = useState({});
-
+  const [dataLoad, setDataLoad] = useState(false);
   const [completeFlag, setCompleteFlag] = useState(false);
 
   const initSurvey = async () => {
-    const api = await fetch(
-      `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/a242e0ba-e263-4578-832d-596fb9ae7d20/8fafcd51-e079-4bea-b90f-1416483c9115`
-    );
-    const data = await api.json();
-    setCampaign(data);
-    if (data) {
-      setCurrentQueNum(0);
-      setCurrentQue(data[0]);
-      console.log(currentQue);
-    }
+    api
+      .get(campaignId + `/` + siteId)
+      .then((returnedResponse) => {
+        const data = returnedResponse.data;
+        setCampaign(data);
+
+        if (data) {
+          setDataLoad(true);
+          setCurrentQueNum(0);
+          setCurrentQue(data[0]);
+          console.log(currentQue);
+        }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
   };
   const gotoNextQue = (e) => {
     e.preventDefault();
-    debugger;
+
     const loc = location.coords.lat + ", " + location.coords.lng;
     const answer = {
       question_id: currentQue.question_id,
@@ -54,14 +67,20 @@ export default function Survey() {
       coordinate: loc,
     };
 
-    setResponse([answer, ...response]);
     const nextNum = currentQueNum + 1;
     if (nextNum < campaign.length) {
+      setResponse([answer, ...response]);
       setCurrentQueNum(nextNum);
       setCurrentQue(campaign[nextNum]);
+      setCurrentAns({});
     } else {
-      // Call the post here
       setCompleteFlag(true);
+      const finalAnswer = [answer, ...response];
+      api.post(
+        campaignId + `/` + siteId,
+
+        finalAnswer
+      );
     }
   };
   const onLocSuccess = (location) => {
@@ -103,7 +122,7 @@ export default function Survey() {
       align="center"
     >
       <Grid item xs={12} sm={12} md={12}>
-        {!completeFlag && (
+        {dataLoad && !completeFlag && (
           <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
             <Grid align="center" style={{ height: "15vh" }}>
               <h2>{currentQue.question}</h2>
@@ -159,7 +178,7 @@ export default function Survey() {
             </Grid>
           </Paper>
         )}
-        {completeFlag && (
+        {dataLoad && completeFlag && (
           <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
             <Grid
               container
@@ -167,7 +186,7 @@ export default function Survey() {
               justifyContent="center"
               alignItems="center"
             >
-              <h1>Thank you for the response!</h1>
+              <h1>Thank you for your response!</h1>
             </Grid>
           </Paper>
         )}
