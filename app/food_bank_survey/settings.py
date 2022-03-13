@@ -136,6 +136,7 @@ os.environ["HTTPS"] = "on"
 
 BASE_URL = os.environ.get("BASE_URL", default="localhost:8000")
 
+BASE_WEB_URL = os.environ.get("BASE_WEB_URL", default="localhost")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
