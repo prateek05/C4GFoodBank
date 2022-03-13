@@ -4,12 +4,18 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from geopy.geocoders import Nominatim
 from rest_framework import mixins, status, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response as APIResponse
 
 from campaigns.models import Campaign, Response
-from campaigns.serializers import SurveyResponseSerializer, SurveySerializer
+from campaigns.serializers import SurveySerializer
+
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
 
 
 def is_valid_uuid(value):
@@ -44,7 +50,9 @@ get_response = openapi.Response("survey get response", SurveySerializer)
     response={201: "", 400: "Bad request"},
 )
 @api_view(["GET", "POST"])
+@authentication_classes((CsrfExemptSessionAuthentication, BasicAuthentication))
 def survey(request, campaign_id, site_id) -> APIResponse:
+
     if request.method == "GET":
         if (
             campaign_id
@@ -68,21 +76,25 @@ def survey(request, campaign_id, site_id) -> APIResponse:
             and is_valid_uuid(site_id)
         ):
             request_body = JSONParser().parse(request)
-            for response in response_data:
+            for response in request_body:
                 if (
-                    "coordinates" in request_body
-                    and request_body.get("coordinates") != ""
+                    "coordinates" in response
+                    and response.get("coordinates") != ""
+                    and response.get("coordinates") != None
                 ):
-                    request_body.update(
-                        "location",
-                        geolocator.reverse(request_body.get("coordinates")).raw[
-                            "address"
-                        ]["county"],
+                    response.update(
+                        {
+                            "location": geolocator.reverse(
+                                response.get("coordinates")
+                            ).raw["address"]["county"]
+                        }
                     )
-                    del request_body["coordinates"]
+                    del response["coordinates"]
                 else:
-                    request_body.update("location", None)
-                    del request_body["coordinates"]
-                SurveyResponseSerializer(response, many=False).save()
+                    response.update({"location": None})
+                    del response["coordinates"]
+                response.update({"site_id": site_id})
+                print(response)
+                Response.objects.create(**response)
             return APIResponse(status=status.HTTP_204_NO_CONTENT)
     return APIResponse(status=status.HTTP_400_BAD_REQUEST)

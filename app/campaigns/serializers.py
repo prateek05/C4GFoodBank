@@ -15,12 +15,3 @@ class SurveySerializer(serializers.HyperlinkedModelSerializer):
             "additional_info",
             "language",
         ]
-
-
-class SurveyResponseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Response
-        fields = ["question_id", "location", "value", "language"]
-
-    def create(self, validated_data):
-        return Response.objects.create(**validated_data)

@@ -13,7 +13,7 @@ RUN npm ci --silent
 COPY . .
 
 
-RUN npm run build
+RUN npm run-script build
 
 FROM nginx:stable-alpine
 RUN  rm /etc/nginx/conf.d/default.conf

@@ -17,7 +17,7 @@ class Question(models.Model):
         max_length=1000,
         null=False,
         blank=True,
-        help_text="Example choice format for a radio or check answer template: 'Red','Blue','Green'",
+        help_text="Example choice format for a radio or check answer template: Red, Blue, Green",
     )
     answer_template = models.CharField(max_length=25, null=True, choices=TEMPLATE_TYPES)
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
