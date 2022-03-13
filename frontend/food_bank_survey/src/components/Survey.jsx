@@ -49,11 +49,10 @@ export default function Survey() {
           setDataLoad(true);
           setCurrentQueNum(0);
           setCurrentQue(data[0]);
-          console.log(currentQue);
         }
       })
       .catch((error) => {
-        console.log("Error:", error);
+        setDataLoad(false);
       });
   };
   const gotoNextQue = (e) => {
@@ -187,6 +186,18 @@ export default function Survey() {
               alignItems="center"
             >
               <h1>Thank you for your response!</h1>
+            </Grid>
+          </Paper>
+        )}
+        {!dataLoad && (
+          <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <h1>This survey does not exist.</h1>
             </Grid>
           </Paper>
         )}
