@@ -27,7 +27,7 @@ export default function Survey() {
   const [location, setLocation] = useState({
     loaded: false,
     error: false,
-    coords: { lat: "", lng: "" },
+    coords: { lat: null, lng: null },
   });
 
   const [campaign, setCampaign] = useState([]);
@@ -58,10 +58,11 @@ export default function Survey() {
   const gotoNextQue = (e) => {
     e.preventDefault();
 
-    const loc = location.coords.lat + ", " + location.coords.lng;
+    const loc = location.coords.lat?location.coords.lat + ", " + location.coords.lng:null;
     const answer = {
       question_id: currentQue.question_id,
       value: currentAns.value,
+
       language: currentQue.language,
       coordinates: loc,
     };
@@ -97,8 +98,8 @@ export default function Survey() {
       loaded: true,
       error: true,
       coords: {
-        lat: 0,
-        lng: 0,
+        lat: null,
+        lng: null,
       },
     });
   };
