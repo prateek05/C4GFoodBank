@@ -10,8 +10,10 @@ services:
   web:
     build: ./app
     command: gunicorn -b 0.0.0.0 -p 8000 food_bank_survey.wsgi:application
+    # command: python manage.py runserver
     volumes:
       - ./app/:/usr/src/app/
+      - static_volume:/usr/src/app/django_static
     ports:
       - "8000:8000"
     expose:
@@ -27,6 +29,7 @@ services:
       - ./frontend/food_bank_survey:/app
       # One-way volume to use node_modules from inside image
       - /app/node_modules
+      - static_volume:/usr/src/app/django_static
       - /etc/nginx/conf.d
     ports:
       - "80:80"
