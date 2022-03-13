@@ -23,6 +23,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 from campaigns import views as surveyViews
 
+
 schema_url_patterns = [
     path(
         "api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"
