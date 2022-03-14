@@ -1,2 +1,3 @@
 node_modules
 qr_codes/
+*.pem
