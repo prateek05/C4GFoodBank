@@ -14,7 +14,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
   const api = axios.create({
-    baseURL: `http://localhost/api/survey/`,
+    baseURL: `http://ec2-3-91-49-197.compute-1.amazonaws.com/api/survey/`,
   });
 
   const { campaignId, siteId } = useParams();

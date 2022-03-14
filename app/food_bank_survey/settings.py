@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get(
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS", default="0.0.0.0,localhost"
+    "DJANGO_ALLOWED_HOSTS",
+    default="0.0.0.0,localhost,ec2-3-91-49-197.compute-1.amazonaws.com",
 ).split(",")
 
 
@@ -163,8 +164,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
 
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
-ACCOUNT_URL = os.environ.get("ACCOUNT_URL", default=None)
+S3_BUCKET = os.environ.get("S3_BUCKET", default=None)
 
-ACCOUNT_ACCESS_KEY = os.environ.get("ACCOUNT_ACCESS_KEY", default=None)
+ACCESS_KEY = os.environ.get("ACCESS_KEY", default=None)
+SECRET_ACCESS_KEY = os.environ.get("SECRET_ACCESS_KEY", default=None)
 
-ACCOUNT_ACCESS_KEY = os.environ.get("QR_CODE_CONTAINER", default=None)
+# ACCOUNT_URL = os.environ.get("ACCOUNT_URL", default=None)
+
+# ACCOUNT_ACCESS_KEY = os.environ.get("ACCOUNT_ACCESS_KEY", default=None)
+
+# ACCOUNT_ACCESS_KEY = os.environ.get("QR_CODE_CONTAINER", default=None)
