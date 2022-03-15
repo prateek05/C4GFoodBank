@@ -32,9 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get(
     "DJANGO_ALLOWED_HOSTS",
-    default="0.0.0.0,localhost,ec2-3-91-49-197.compute-1.amazonaws.com",
+    default="0.0.0.0,127.0.0.1,localhost,ec2-3-91-49-197.compute-1.amazonaws.com,c4gfoodbank.azurewebsites.net",
 ).split(",")
-
 
 # Application definition
 
@@ -61,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "food_bank_survey.urls"
@@ -68,7 +68,10 @@ ROOT_URLCONF = "food_bank_survey.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'staticfiles'),
+            os.path.join(BASE_DIR, "build")
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -86,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "food_bank_survey.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -100,7 +102,6 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -120,7 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -134,7 +134,6 @@ USE_TZ = True
 
 os.environ["HTTPS"] = "on"
 
-
 BASE_URL = os.environ.get("BASE_URL", default="localhost:8000")
 
 BASE_WEB_URL = os.environ.get("BASE_WEB_URL", default="localhost")
@@ -142,7 +141,7 @@ BASE_WEB_URL = os.environ.get("BASE_WEB_URL", default="localhost")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "/django_static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -159,8 +158,15 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static'),
+]
+
+print(STATICFILES_DIRS)
 STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
 # SECURE_SSL_REDIRECT = True
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 

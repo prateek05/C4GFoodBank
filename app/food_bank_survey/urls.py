@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.shortcuts import render
+from django.urls import include, path, re_path
 from django.urls import re_path as url
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -37,6 +38,9 @@ schema_view = get_schema_view(
     patterns=schema_url_patterns,
 )
 
+def render_react(request):
+    return render(request, "index.html")
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(
@@ -47,4 +51,6 @@ urlpatterns = [
     path(
         "api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"
     ),
+    re_path(r"^$", render_react),
+    re_path(r"^(?:.*)/?$", render_react),
 ]
