@@ -46,12 +46,17 @@ def init_new_qr_code(instance, action, reverse, model, **kwargs):
                     #     blob_client.upload_blob(
                     #         data, overwrite=True, content_settings=image_content_setting
                     #     )
-                    client.upload_file(qr_code_path, settings.S3_BUCKET, f"{filename}")
-                    object_acl = s3_resource.ObjectAcl(
-                        settings.S3_BUCKET, f"{filename}"
-                    )
-                    response = object_acl.put(ACL="public-read")
-                    remove(qr_code_path)
+                    try:
+                        client.upload_file(
+                            qr_code_path, settings.S3_BUCKET, f"{filename}"
+                        )
+                        object_acl = s3_resource.ObjectAcl(
+                            settings.S3_BUCKET, f"{filename}"
+                        )
+                        response = object_acl.put(ACL="public-read")
+                        remove(qr_code_path)
+                    except:
+                        print("image removal failed")
                     qr_code_path = (
                         f"https://{settings.S3_BUCKET}.s3.amazonaws.com/{filename}"
                     )
