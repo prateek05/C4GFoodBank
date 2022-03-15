@@ -103,8 +103,8 @@ export default function Survey() {
       loaded: true,
       error: true,
       coords: {
-        lat: 0,
-        lng: 0,
+        lat: null,
+        lng: null,
       },
     });
   };
