@@ -15,3 +15,4 @@ COPY . .
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+EXPOSE 8000
