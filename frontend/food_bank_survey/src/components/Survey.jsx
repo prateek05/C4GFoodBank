@@ -27,7 +27,7 @@ export default function Survey() {
   const [location, setLocation] = useState({
     loaded: false,
     error: false,
-    coords: { lat: null, lng: null },
+    coords: { lat: "", lng: "" },
   });
 
   const [campaign, setCampaign] = useState([]);
@@ -36,6 +36,7 @@ export default function Survey() {
   const [response, setResponse] = useState([]);
   const [currentAns, setCurrentAns] = useState({ value: "" });
   const [dataLoad, setDataLoad] = useState(false);
+  const [error, setError] = useState(false);
   const [completeFlag, setCompleteFlag] = useState(false);
 
   const initSurvey = async () => {
@@ -52,17 +53,19 @@ export default function Survey() {
         }
       })
       .catch((error) => {
-        setDataLoad(false);
+        setError(true);
       });
   };
   const gotoNextQue = (e) => {
     e.preventDefault();
 
-    const loc = location.coords.lat?location.coords.lat + ", " + location.coords.lng:null;
+    const loc = location.coords.lat
+      ? location.coords.lat + ", " + location.coords.lng
+      : null;
+
     const answer = {
       question_id: currentQue.question_id,
       value: currentAns.value,
-
       language: currentQue.language,
       coordinates: loc,
     };
@@ -78,7 +81,6 @@ export default function Survey() {
       const finalAnswer = [answer, ...response];
       api.post(
         campaignId + `/` + siteId,
-
         finalAnswer
       );
     }
@@ -98,8 +100,8 @@ export default function Survey() {
       loaded: true,
       error: true,
       coords: {
-        lat: null,
-        lng: null,
+        lat: 0,
+        lng: 0,
       },
     });
   };
@@ -158,6 +160,7 @@ export default function Survey() {
                     aria-labelledby="demo-radio-buttons-group-label"
                     name="radio-buttons-group"
                     onChange={(e) => setCurrentAns({ value: e.target.value })}
+                    key={currentQue.question_id}
                   >
                     {currentQue.answer_choices
                       .split(",")
@@ -165,7 +168,7 @@ export default function Survey() {
                         return (
                           <FormControlLabel
                             value={choice}
-                            key={index}
+                            key={index + Math.random()}
                             control={<Radio />}
                             label={choice}
                           />
@@ -203,7 +206,19 @@ export default function Survey() {
             </Grid>
           </Paper>
         )}
-        {!dataLoad && (
+        {!dataLoad && !error && (
+          <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <h1>Please wait for the survey to load.</h1>
+            </Grid>
+          </Paper>
+        )}
+        {error && (
           <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
             <Grid
               container
