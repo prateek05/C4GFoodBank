@@ -94,7 +94,6 @@ def survey(request, campaign_id, site_id) -> APIResponse:
                     response.update({"location": None})
                     del response["coordinates"]
                 response.update({"site_id": site_id})
-                print(response)
                 Response.objects.create(**response)
             return APIResponse(status=status.HTTP_204_NO_CONTENT)
     return APIResponse(status=status.HTTP_400_BAD_REQUEST)
