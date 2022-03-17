@@ -164,7 +164,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
 
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
-S3_BUCKET = os.environ.get("S3_BUCKET", default=None)
+CLOUD_PARTNER = os.environ.get("CLOUD_PARTNER", default="S3")
+
+OBJECT_CONTAINER_NAME = os.environ.get("OBJECT_CONTAINER_NAME", default=None)
 
 ACCESS_KEY = os.environ.get("ACCESS_KEY", default=None)
 SECRET_ACCESS_KEY = os.environ.get("SECRET_ACCESS_KEY", default=None)

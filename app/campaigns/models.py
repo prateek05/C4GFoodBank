@@ -104,7 +104,7 @@ class QRCode(models.Model):
         db_table = "qr_codes"
 
     slug = models.CharField(null=False, max_length=200)
-    qr_code_path = models.ImageField()
+    qr_code_path = models.URLField()
     site = models.ForeignKey(
         "users.AgencySite",
         on_delete=models.SET_NULL,

@@ -18,3 +18,5 @@ drf-yasg==1.20.0
 azure-storage-blob==12.10.0
 factory_boy==3.2.1
 boto3==1.21.18
+python-magic==0.4.25
+cloudstorage==0.11.0
