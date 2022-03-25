@@ -82,11 +82,14 @@ def survey(request, campaign_id, site_id) -> APIResponse:
                     and response.get("coordinates") != ""
                     and response.get("coordinates") != None
                 ):
+                    coordinates = response.get("coordinates").split(",")
                     response.update(
                         {
                             "location": geolocator.reverse(
                                 response.get("coordinates")
-                            ).raw["address"]["county"]
+                            ).raw["address"]["county"],
+                            "latitude" : coordinates[0],
+                            "longitude" : coordinates[1]
                         }
                     )
                     del response["coordinates"]

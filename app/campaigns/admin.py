@@ -10,6 +10,12 @@ class QRCodeAdmin(admin.ModelAdmin):
 class CampaignAdmin(admin.ModelAdmin):
     readonly_fields = ["created_at", "updated_at", "deleted_at"]
 
+    def save_model(self, request, obj, form, change):
+        if not change:
+           obj.create_by = request.user 
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
+
 
 class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ["created_at", "updated_at", "deleted_at"]

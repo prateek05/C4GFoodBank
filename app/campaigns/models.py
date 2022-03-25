@@ -26,13 +26,6 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)
-    create_by = models.ForeignKey(
-        "users.CampaignUser",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="questions_created",
-    )
 
     def __str__(self):
         return f"Question: {self.question} id: {self.question_id}"
@@ -60,6 +53,8 @@ class Response(models.Model):
     )
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     value = models.CharField(max_length=1000, null=False)
+    latitude = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -81,12 +76,20 @@ class Campaign(models.Model):
     name = models.CharField(max_length=200, null=False)
     questions = models.ManyToManyField(Question)
     sites = models.ManyToManyField("users.AgencySite")
+    campaign_owner = models.CharField(max_length=200, null=True, blank=True)
     create_by = models.ForeignKey(
         "users.CampaignUser",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name="campaigns_created",
+    )
+    updated_by = models.ForeignKey(
+        "users.CampaignUser",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="campaigns_updated",
     )
     actor_type = models.CharField(max_length=25, null=True, choices=ACTOR_TYPE_CHOICES)
     active = models.BooleanField()
@@ -97,12 +100,12 @@ class Campaign(models.Model):
     def __str__(self):
         return f"Campaign {self.name}"
 
-
 # Site QRCode Model
 class QRCode(models.Model):
     class Meta:
         db_table = "qr_codes"
 
+    qr_code_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.CharField(null=False, max_length=200)
     qr_code_path = models.URLField()
     site = models.ForeignKey(
