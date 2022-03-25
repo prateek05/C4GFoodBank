@@ -25,7 +25,7 @@ def init_new_qr_code(instance, action, reverse, model, **kwargs):
     if action == "post_add" and not reverse:
         for site in instance.sites.all():
             filename = (
-                f"{instance.name.replace(' ','-')}_{site.name.replace(' ' ,'-')}.png"
+                f"{instance.name.replace(' ','-').replace('/','-')}_{site.name.replace(' ','-').replace('/','-')}.png"
             )
             qr_code_path = f"{settings.QR_CODE_STORAGE_LOCATION}/{filename}"
             if not path.isfile(qr_code_path):

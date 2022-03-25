@@ -4,6 +4,25 @@ from django.db import models
 
 LANGUAGE_TYPES = [("EN", "English")]
 
+# AnserChoices for questions to leverage 
+class AnswerChoice(models.Model):
+    class Meta:
+        db_table = "answer_choices"
+
+    answer_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    answer_value = models.CharField(
+        max_length=1000,
+        null=False,
+        blank=False,
+    )
+    language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    deleted_at = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return f"{self.answer_value}"
+
 # Campaign Questions Info Model
 class Question(models.Model):
     class Meta:
@@ -13,12 +32,7 @@ class Question(models.Model):
 
     question_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     question = models.CharField(max_length=1000, null=False, blank=False)
-    answer_choices = models.CharField(
-        max_length=1000,
-        null=False,
-        blank=True,
-        help_text="Example choice format for a radio or check answer template: Red, Blue, Green",
-    )
+    answer_choices = models.ManyToManyField(AnswerChoice)
     answer_template = models.CharField(max_length=25, null=True, choices=TEMPLATE_TYPES)
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     active = models.BooleanField()
