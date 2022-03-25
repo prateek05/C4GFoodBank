@@ -69,7 +69,9 @@ ROOT_URLCONF = "food_bank_survey.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'campaigns/admin'),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -161,7 +163,6 @@ REST_FRAMEWORK = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
-# SECURE_SSL_REDIRECT = True
 
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
