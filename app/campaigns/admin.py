@@ -27,8 +27,8 @@ class ExportCsvMixin:
             for field in fields:
                 try:
                     if field.many_to_many == True or field.one_to_many == True:
-                        # data.append([str(value) for value in getattr(obj, field.name).all().values_list('pk',flat=True)])
-                        data.append("")
+                        data.append([str(value) for value in getattr(obj, field.name).all().values_list('pk',flat=True)])
+                        # data.append("")
                     elif field.many_to_one == True: 
                         data.append(getattr(obj, field.name).pk)
                     else:
