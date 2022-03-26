@@ -4,7 +4,7 @@ from django.db import models
 
 LANGUAGE_TYPES = [("EN", "English")]
 
-# AnserChoices for questions to leverage 
+# AnserChoices for questions to leverage
 class AnswerChoice(models.Model):
     class Meta:
         db_table = "answer_choices"
@@ -22,6 +22,7 @@ class AnswerChoice(models.Model):
 
     def __str__(self):
         return f"{self.answer_value}"
+
 
 # Campaign Questions Info Model
 class Question(models.Model):
@@ -67,8 +68,12 @@ class Response(models.Model):
     )
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     value = models.CharField(max_length=1000, null=False)
-    latitude = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
+    latitude = models.DecimalField(
+        max_digits=10, decimal_places=4, null=True, blank=True
+    )
+    longitude = models.DecimalField(
+        max_digits=10, decimal_places=4, null=True, blank=True
+    )
     location = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -113,6 +118,7 @@ class Campaign(models.Model):
 
     def __str__(self):
         return f"Campaign {self.name}"
+
 
 # Site QRCode Model
 class QRCode(models.Model):

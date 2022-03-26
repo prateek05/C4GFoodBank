@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('campaigns', '0005_alter_question_answer_choices'),
+        ("campaigns", "0005_alter_question_answer_choices"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='qrcode',
-            name='qr_code_path',
+            model_name="qrcode",
+            name="qr_code_path",
             field=models.URLField(),
         ),
     ]

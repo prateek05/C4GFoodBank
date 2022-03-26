@@ -6,22 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0003_alter_agencysite_site_id'),
+        ("users", "0003_alter_agencysite_site_id"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='agencysite',
-            name='point_of_contact',
+            model_name="agencysite",
+            name="point_of_contact",
         ),
         migrations.AlterField(
-            model_name='agencysite',
-            name='latitude',
-            field=models.DecimalField(blank=True, decimal_places=4, max_digits=10, null=True),
+            model_name="agencysite",
+            name="latitude",
+            field=models.DecimalField(
+                blank=True, decimal_places=4, max_digits=10, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='agencysite',
-            name='longitude',
-            field=models.DecimalField(blank=True, decimal_places=4, max_digits=10, null=True),
+            model_name="agencysite",
+            name="longitude",
+            field=models.DecimalField(
+                blank=True, decimal_places=4, max_digits=10, null=True
+            ),
         ),
     ]

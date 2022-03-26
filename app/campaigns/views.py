@@ -9,8 +9,8 @@ from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response as APIResponse
 
-from campaigns.models import Campaign, Response,AnswerChoice
-from campaigns.serializers import SurveySerializer, AnswerChoiceSerializer
+from campaigns.models import AnswerChoice, Campaign, Response
+from campaigns.serializers import AnswerChoiceSerializer, SurveySerializer
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -64,7 +64,9 @@ def survey(request, campaign_id, site_id) -> APIResponse:
                 campaign = Campaign.objects.get(pk=campaign_id, active=True)
                 if campaign.active and campaign.sites.filter(pk=site_id).exists():
                     questions = campaign.questions.filter(active=True)
-                    serializer = SurveySerializer(questions, many=True, context={'request': request})
+                    serializer = SurveySerializer(
+                        questions, many=True, context={"request": request}
+                    )
                     return APIResponse(serializer.data)
             except Exception as e:
                 print(e)
@@ -89,8 +91,8 @@ def survey(request, campaign_id, site_id) -> APIResponse:
                             "location": geolocator.reverse(
                                 response.get("coordinates")
                             ).raw["address"]["county"],
-                            "latitude" : coordinates[0],
-                            "longitude" : coordinates[1]
+                            "latitude": coordinates[0],
+                            "longitude": coordinates[1],
                         }
                     )
                     del response["coordinates"]

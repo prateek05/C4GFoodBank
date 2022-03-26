@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_swagger",
     "drf_yasg",
-    'django_extensions'
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, 'campaigns/admin'),
+            os.path.join(BASE_DIR, "campaigns/admin"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {

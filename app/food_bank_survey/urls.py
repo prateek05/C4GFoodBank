@@ -46,5 +46,5 @@ urlpatterns = [
     ),
     path(
         "api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"
-    )
+    ),
 ]

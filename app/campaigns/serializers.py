@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from campaigns.models import Question, AnswerChoice
+from campaigns.models import AnswerChoice, Question
+
 
 class AnswerChoiceSerializer(serializers.StringRelatedField):
     class Meta:
         model = AnswerChoice
-        fields = [
-            "answer_value"
-        ]
+        fields = ["answer_value"]
+
 
 class SurveySerializer(serializers.ModelSerializer):
     answer_choices = AnswerChoiceSerializer(many=True)
