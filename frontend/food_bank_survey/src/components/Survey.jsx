@@ -17,7 +17,7 @@ export default function Survey() {
 
     // baseURL: `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/`,
 
-    baseURL: `http://ec2-3-91-49-197.compute-1.amazonaws.com/api/survey/`,
+    baseURL: `http://localhost/api/survey/`,
   });
 
   const { campaignId, siteId } = useParams();
@@ -166,7 +166,6 @@ export default function Survey() {
                     key={currentQue.question_id}
                   >
                     {currentQue.answer_choices
-                      .split(",")
                       .map((choice, index) => {
                         return (
                           <FormControlLabel

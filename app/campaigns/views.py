@@ -9,8 +9,8 @@ from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response as APIResponse
 
-from campaigns.models import Campaign, Response
-from campaigns.serializers import SurveySerializer
+from campaigns.models import AnswerChoice, Campaign, Response
+from campaigns.serializers import AnswerChoiceSerializer, SurveySerializer
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -64,9 +64,12 @@ def survey(request, campaign_id, site_id) -> APIResponse:
                 campaign = Campaign.objects.get(pk=campaign_id, active=True)
                 if campaign.active and campaign.sites.filter(pk=site_id).exists():
                     questions = campaign.questions.filter(active=True)
-                    serializer = SurveySerializer(questions, many=True)
+                    serializer = SurveySerializer(
+                        questions, many=True, context={"request": request}
+                    )
                     return APIResponse(serializer.data)
-            except:
+            except Exception as e:
+                print(e)
                 return APIResponse(status=status.HTTP_400_BAD_REQUEST)
     if request.method == "POST":
         if (
@@ -82,11 +85,14 @@ def survey(request, campaign_id, site_id) -> APIResponse:
                     and response.get("coordinates") != ""
                     and response.get("coordinates") != None
                 ):
+                    coordinates = response.get("coordinates").split(",")
                     response.update(
                         {
                             "location": geolocator.reverse(
                                 response.get("coordinates")
-                            ).raw["address"]["county"]
+                            ).raw["address"]["county"],
+                            "latitude": coordinates[0],
+                            "longitude": coordinates[1],
                         }
                     )
                     del response["coordinates"]
