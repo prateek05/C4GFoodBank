@@ -45,41 +45,6 @@ class Question(models.Model):
     def __str__(self):
         return f"Question: {self.question} id: {self.question_id}"
 
-
-# Response Info Model
-class Response(models.Model):
-    class Meta:
-        db_table = "responses"
-
-    response_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    question = models.ForeignKey(
-        Question,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="responses",
-    )
-    site = models.ForeignKey(
-        "users.AgencySite",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="responses",
-    )
-    language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
-    value = models.CharField(max_length=1000, null=False)
-    latitude = models.DecimalField(
-        max_digits=10, decimal_places=4, null=True, blank=True
-    )
-    longitude = models.DecimalField(
-        max_digits=10, decimal_places=4, null=True, blank=True
-    )
-    location = models.CharField(max_length=200, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(null=True)
-
-
 # Campaign Model
 class Campaign(models.Model):
     class Meta:
@@ -119,6 +84,45 @@ class Campaign(models.Model):
     def __str__(self):
         return f"Campaign {self.name}"
 
+# Response Info Model
+class Response(models.Model):
+    class Meta:
+        db_table = "responses"
+
+    response_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="responses",
+    )
+    site = models.ForeignKey(
+        "users.AgencySite",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="responses",
+    )
+    campaign = models.ForeignKey(
+        Campaign,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="responses",
+    )
+    language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
+    value = models.CharField(max_length=1000, null=False)
+    latitude = models.DecimalField(
+        max_digits=10, decimal_places=4, null=True, blank=True
+    )
+    longitude = models.DecimalField(
+        max_digits=10, decimal_places=4, null=True, blank=True
+    )
+    location = models.CharField(max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    deleted_at = models.DateTimeField(null=True)
 
 # Site QRCode Model
 class QRCode(models.Model):

@@ -162,7 +162,7 @@ class QuestionAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 class ResponseAdmin(admin.ModelAdmin, ExportCsvMixin):
     readonly_fields = ["created_at", "updated_at", "deleted_at", "response_id"]
-    list_filter = ("site", "language", "location", "created_at", "updated_at")
+    list_filter = ("site", "language", "location", "created_at", "updated_at", "campaign")
     ordering = ("-created_at", "-updated_at")
     actions = ["export_as_csv"]
 

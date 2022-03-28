@@ -79,27 +79,27 @@ def survey(request, campaign_id, site_id) -> APIResponse:
             and is_valid_uuid(site_id)
         ):
             request_body = JSONParser().parse(request)
-            for response in request_body:
-                if (
-                    "coordinates" in response
-                    and response.get("coordinates") != ""
-                    and response.get("coordinates") != None
-                ):
-                    coordinates = response.get("coordinates").split(",")
-                    response.update(
-                        {
-                            "location": geolocator.reverse(
-                                response.get("coordinates")
-                            ).raw["address"]["county"],
-                            "latitude": coordinates[0],
-                            "longitude": coordinates[1],
-                        }
-                    )
-                    del response["coordinates"]
-                else:
-                    response.update({"location": None})
-                    del response["coordinates"]
-                response.update({"site_id": site_id})
-                Response.objects.create(**response)
+            if (
+                "coordinates" in request_body
+                and request_body.get("coordinates") != ""
+                and request_body.get("coordinates") != None
+            ):
+                coordinates = request_body.get("coordinates").split(",")
+                request_body.update(
+                    {
+                        "location": geolocator.reverse(
+                            request_body.get("coordinates")
+                        ).raw["address"]["county"],
+                        "latitude": coordinates[0],
+                        "longitude": coordinates[1],
+                    }
+                )
+                del request_body["coordinates"]
+            else:
+                request_body.update({"location": None})
+                del request_body["coordinates"]
+            request_body.update({"site_id": site_id})
+            request_body.update({"campaign_id": campaign_id})
+            Response.objects.create(**request_body)
             return APIResponse(status=status.HTTP_204_NO_CONTENT)
     return APIResponse(status=status.HTTP_400_BAD_REQUEST)
