@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import axios from "axios";
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from "@mui/material";
+import {Button, FormControlLabel, Grid, Paper, Radio, RadioGroup, TextField,} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
@@ -17,9 +9,7 @@ export default function Survey() {
 
     // baseURL: `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/`,
 
-    // baseURL: `http://ec2-3-91-49-197.compute-1.amazonaws.com/api/survey/`,
     baseURL: `https://c4gfoodbank.azurewebsites.net/api/survey`,
-   // baseURL: `http://127.0.0.1:8000/api/survey`,
   });
 
   const { campaignId, siteId } = useParams();
