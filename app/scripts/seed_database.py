@@ -18,7 +18,6 @@ def run():
             latitude=53.62,
             longitude=17.27,
             address="Some place in Florida",
-            point_of_contact=user,
         ),
     )[0]
     answer_choice1 = AnswerChoice.objects.update_or_create(
@@ -40,7 +39,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question2 = Question.objects.update_or_create(
@@ -50,7 +48,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question3 = Question.objects.update_or_create(
@@ -60,7 +57,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question4 = Question.objects.update_or_create(
@@ -70,7 +66,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question5 = Question.objects.update_or_create(
@@ -80,7 +75,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question6 = Question.objects.update_or_create(
@@ -90,7 +84,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question7 = Question.objects.update_or_create(
@@ -100,7 +93,6 @@ def run():
             answer_template="radio",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question8 = Question.objects.update_or_create(
@@ -110,7 +102,6 @@ def run():
             answer_template="text",
             language="EN",
             active=True,
-            create_by=user,
         ),
     )[0]
     question1.answer_choices.add(answer_choice1, answer_choice2, answer_choice3)
