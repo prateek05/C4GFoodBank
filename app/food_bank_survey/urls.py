@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import include, path, re_path
-from django.urls import re_path as url
+from django.urls import path, re_path
+from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions, routers
-from rest_framework_swagger.views import get_swagger_view
 
 from campaigns import views as surveyViews
 
@@ -38,11 +36,13 @@ schema_view = get_schema_view(
     patterns=schema_url_patterns,
 )
 
-def render_react(request):
+
+def index(request):
     return render(request, "index.html")
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls, name="admin"),
+    path("admin", admin.site.urls, name="admin"),
     path(
         "openapi/",
         schema_view.with_ui("swagger", cache_timeout=0),
@@ -51,6 +51,7 @@ urlpatterns = [
     path(
         "api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"
     ),
-    re_path(r"^$", render_react),
-    re_path(r"^(?:.*)/?$", render_react),
+    re_path('.*', TemplateView.as_view(template_name='index.html')),
+    # re_path(r"^$", index),
+    # re_path(r"^(?:.*)/?$", index),
 ]

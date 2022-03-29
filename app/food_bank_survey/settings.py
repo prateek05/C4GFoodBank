@@ -30,23 +30,23 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
-#TODO: Static IP to HostName
+# TODO: Static IP to HostName
 ALLOWED_HOSTS = os.environ.get(
     "DJANGO_ALLOWED_HOSTS",
-default="0.0.0.0,127.0.0.1,localhost,*.compute-1.amazonaws.com,c4gfoodbank.azurewebsites.net",
+    default="127.0.0.1,localhost,c4gfoodbank.azurewebsites.net",
 ).split(",")
 
 # TODO: Static IP to HostName
 ALLOWED_CIDR_NETS = ['169.254.130.0/24']
 # Application definition
-CSRF_TRUSTED_ORIGINS= os.environ.get(
+CSRF_TRUSTED_ORIGINS = os.environ.get(
     "CSRF_TRUSTED_ORIGINS",
-default= ['https://c4gfoodbank.azurewebsites.net','http://127.0.0.1:8000'])
+    default=['https://c4gfoodbank.azurewebsites.net', 'http://127.0.0.1:8000'])
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_REPLACE_HTTPS_REFERER = True
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_REPLACE_HTTPS_REFERER = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -61,13 +61,14 @@ INSTALLED_APPS = [
     "rest_framework_swagger",
     "drf_yasg",
     "django_extensions",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-   #"django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -82,8 +83,8 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, 'staticfiles'),
-            os.path.join(BASE_DIR, "build")
+            os.path.join(BASE_DIR, "campaigns/admin"),
+            os.path.join(BASE_DIR, 'build'),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -155,6 +156,11 @@ BASE_WEB_URL = os.environ.get("BASE_WEB_URL", default="localhost")
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "campaigns/admin"),
+    os.path.join(BASE_DIR, 'build', 'static'),  # update the STATICFILES_DIRS
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -171,13 +177,6 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build/static'),
-]
-
-print(STATICFILES_DIRS)
-STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
-
 # SECURE_SSL_REDIRECT = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
@@ -190,9 +189,3 @@ OBJECT_CONTAINER_NAME = os.environ.get("OBJECT_CONTAINER_NAME", default="c4gfood
 
 ACCESS_KEY = os.environ.get("ACCESS_KEY", default=None)
 SECRET_ACCESS_KEY = os.environ.get("SECRET_ACCESS_KEY", default=None)
-
-# ACCOUNT_URL = os.environ.get("ACCOUNT_URL", default=None)
-
-# ACCOUNT_ACCESS_KEY = os.environ.get("ACCOUNT_ACCESS_KEY", default=None)
-
-# ACCOUNT_ACCESS_KEY = os.environ.get("QR_CODE_CONTAINER", default=None)
