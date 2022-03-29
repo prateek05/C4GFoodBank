@@ -14,9 +14,12 @@ import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
   const api = axios.create({
+
     // baseURL: `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/`,
 
-    baseURL: `http://localhost/api/survey/`,
+    // baseURL: `http://ec2-3-91-49-197.compute-1.amazonaws.com/api/survey/`,
+    baseURL: `https://c4gfoodbank.azurewebsites.net/api/survey`,
+   // baseURL: `http://127.0.0.1:8000/api/survey`,
   });
 
   const { campaignId, siteId } = useParams();
@@ -35,12 +38,11 @@ export default function Survey() {
   const [campaign, setCampaign] = useState([]);
   const [currentQue, setCurrentQue] = useState({});
   const [currentQueNum, setCurrentQueNum] = useState(0);
-
+  const [response, setResponse] = useState([]);
   const [currentAns, setCurrentAns] = useState({ value: "" });
   const [dataLoad, setDataLoad] = useState(false);
   const [error, setError] = useState(false);
   const [completeFlag, setCompleteFlag] = useState(false);
-  const [disable, setDisable] = useState(true);
 
   const initSurvey = async () => {
     api
@@ -75,13 +77,18 @@ export default function Survey() {
 
     const nextNum = currentQueNum + 1;
     if (nextNum < campaign.length) {
+      setResponse([answer, ...response]);
       setCurrentQueNum(nextNum);
       setCurrentQue(campaign[nextNum]);
       setCurrentAns({ value: "" });
     } else {
       setCompleteFlag(true);
+      const finalAnswer = [answer, ...response];
+      api.post(
+        campaignId + `/` + siteId,
+        finalAnswer
+      );
     }
-    api.post(campaignId + `/` + siteId, answer);
   };
   const onLocSuccess = (location) => {
     setLocation({
@@ -118,10 +125,6 @@ export default function Survey() {
   useEffect(() => {
     initSurvey();
   }, []);
-  useEffect(() => {
-    currentAns.value !== "" ? setDisable(false) : setDisable(true);
-  }, [currentAns]);
-
   return (
     <Grid
       container
@@ -165,6 +168,7 @@ export default function Survey() {
                     key={currentQue.question_id}
                   >
                     {currentQue.answer_choices
+                      .split(",")
                       .map((choice, index) => {
                         return (
                           <FormControlLabel
@@ -188,7 +192,6 @@ export default function Survey() {
               <Button
                 onClick={gotoNextQue}
                 variant="contained"
-                disabled={disable}
                 endIcon={<SendIcon />}
               >
                 Continue

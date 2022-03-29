@@ -28,14 +28,25 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', False)
 
+#TODO: Static IP to HostName
 ALLOWED_HOSTS = os.environ.get(
     "DJANGO_ALLOWED_HOSTS",
-    default="0.0.0.0,127.0.0.1,localhost,ec2-3-91-49-197.compute-1.amazonaws.com,c4gfoodbank.azurewebsites.net",
+default="0.0.0.0,127.0.0.1,localhost,*.compute-1.amazonaws.com,c4gfoodbank.azurewebsites.net",
 ).split(",")
 
+# TODO: Static IP to HostName
+ALLOWED_CIDR_NETS = ['169.254.130.0/24']
 # Application definition
+CSRF_TRUSTED_ORIGINS= os.environ.get(
+    "CSRF_TRUSTED_ORIGINS",
+default= ['https://c4gfoodbank.azurewebsites.net','http://127.0.0.1:8000'])
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_REPLACE_HTTPS_REFERER = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -49,19 +60,20 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_swagger",
     "drf_yasg",
-    'django_extensions'
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+   #"django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "allow_cidr.middleware.AllowCIDRMiddleware",
 ]
 
 ROOT_URLCONF = "food_bank_survey.urls"
@@ -165,15 +177,16 @@ STATICFILES_DIRS = [
 
 print(STATICFILES_DIRS)
 STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
+
 # SECURE_SSL_REDIRECT = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
-CLOUD_PARTNER = os.environ.get("CLOUD_PARTNER", default="S3")
+CLOUD_PARTNER = os.environ.get("CLOUD_PARTNER", default="AZURE")
 
-OBJECT_CONTAINER_NAME = os.environ.get("OBJECT_CONTAINER_NAME", default=None)
+OBJECT_CONTAINER_NAME = os.environ.get("OBJECT_CONTAINER_NAME", default="c4gfoodbank")
 
 ACCESS_KEY = os.environ.get("ACCESS_KEY", default=None)
 SECRET_ACCESS_KEY = os.environ.get("SECRET_ACCESS_KEY", default=None)
