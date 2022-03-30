@@ -63,7 +63,7 @@ def survey(request, campaign_id, site_id) -> APIResponse:
             try:
                 campaign = Campaign.objects.get(pk=campaign_id, active=True)
                 if campaign.active and campaign.sites.filter(pk=site_id).exists():
-                    questions = campaign.questions.filter(active=True)
+                    questions = campaign.questions.filter(active=True).order_by('campaignquestion')
                     serializer = SurveySerializer(
                         questions, many=True, context={"request": request}
                     )

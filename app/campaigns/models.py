@@ -33,7 +33,7 @@ class Question(models.Model):
 
     question_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     question = models.CharField(max_length=1000, null=False, blank=False)
-    answer_choices = models.ManyToManyField(AnswerChoice)
+    answer_choices = models.ManyToManyField(AnswerChoice, blank=True)
     answer_template = models.CharField(max_length=25, null=True, choices=TEMPLATE_TYPES)
     language = models.CharField(max_length=2, default="EN", choices=LANGUAGE_TYPES)
     active = models.BooleanField()
@@ -58,7 +58,7 @@ class Campaign(models.Model):
     ]
     campaign_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, null=False)
-    questions = models.ManyToManyField(Question)
+    questions = models.ManyToManyField(Question, through='CampaignQuestion')
     sites = models.ManyToManyField("users.AgencySite")
     campaign_owner = models.CharField(max_length=200, null=True, blank=True)
     create_by = models.ForeignKey(
@@ -83,6 +83,30 @@ class Campaign(models.Model):
 
     def __str__(self):
         return f"Campaign {self.name}"
+
+class CampaignQuestion(models.Model):
+    class Meta:
+        db_table = "campaign_questions"
+        ordering = ('order',)
+    
+    campaign_question_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    campaign = models.ForeignKey(
+        Campaign,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    order = models.PositiveIntegerField(default=0, help_text="Value needs to be > 0")
+
+        
 
 # Response Info Model
 class Response(models.Model):
