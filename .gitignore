@@ -4,3 +4,4 @@ qr_codes/
 .idea
 */.DS_Store
 .DS_Store
+/venv/

@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import axios from "axios";
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from "@mui/material";
+import {Button, FormControlLabel, Grid, Paper, Radio, RadioGroup, TextField,} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
   const api = axios.create({
     // baseURL: `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/`,
 
-    baseURL: `http://localhost/api/survey/`,
+    baseURL: `https://c4gfoodbank.azurewebsites.net/api/survey`,
   });
 
   const { campaignId, siteId } = useParams();
@@ -123,14 +115,14 @@ export default function Survey() {
   }, [currentAns]);
 
   return (
-    <Grid
-      container
-      spacing={{ xs: 0, sm: 0, md: 0 }}
-      columns={{ xs: 2, sm: 8, md: 12 }}
-      align="center"
-    >
-      <Grid item xs={12} sm={12} md={12}>
-        {dataLoad && !completeFlag && (
+      <Grid
+          container
+          spacing={{xs: 0, sm: 0, md: 0}}
+          columns={{xs: 2, sm: 8, md: 12}}
+          align="center"
+      >
+        <Grid item xs={12} sm={12} md={12}>
+          {dataLoad && !completeFlag && (
           <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
             <Grid align="center" style={{ height: "15vh" }}>
               <h2>{currentQue.question}</h2>
@@ -186,10 +178,10 @@ export default function Survey() {
               alignItems="center"
             >
               <Button
-                onClick={gotoNextQue}
-                variant="contained"
-                disabled={disable}
-                endIcon={<SendIcon />}
+                  onClick={gotoNextQue}
+                  variant="contained"
+                  disabled={disable}
+                  endIcon={<SendIcon/>}
               >
                 Continue
               </Button>
