@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import path
 
-from campaigns.models import AnswerChoice, Campaign, QRCode, Question, Response
+from campaigns.models import AnswerChoice, Campaign, QRCode, Question, Response, CampaignQuestion
 
 
 class ExportCsvMixin:
@@ -66,6 +66,9 @@ class QRCodeAdmin(admin.ModelAdmin, ExportCsvMixin):
     ordering = ("-created_at", "-updated_at")
     actions = ["export_as_csv"]
 
+class CampaignQuestionAdminInline(admin.TabularInline):
+    model = CampaignQuestion
+    extra = 2
 
 class CampaignAdmin(admin.ModelAdmin, ExportCsvMixin):
     change_list_template = "entities/change_list.html"
@@ -89,6 +92,7 @@ class CampaignAdmin(admin.ModelAdmin, ExportCsvMixin):
     filter_horizontal = ("questions", "sites")
     ordering = ("-created_at", "-updated_at")
     actions = ["export_as_csv"]
+    inlines = (CampaignQuestionAdminInline,)
 
     def get_urls(self):
         urls = super().get_urls()
