@@ -1,7 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import {Button, FormControlLabel, Grid, Paper, Radio, RadioGroup, TextField,} from "@mui/material";
+import {
+  Grid,
+  Paper,
+  TextField,
+  Button,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Typography,
+} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
@@ -24,6 +34,18 @@ export default function Survey() {
     coords: { lat: "", lng: "" },
   });
 
+  const theme = createTheme();
+
+  theme.typography.h3 = {
+    fontSize: "1.2rem",
+    "@media (min-width:600px)": {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2rem",
+    },
+  };
+ 
   const [campaign, setCampaign] = useState([]);
   const [currentQue, setCurrentQue] = useState({});
   const [currentQueNum, setCurrentQueNum] = useState(0);
@@ -115,23 +137,36 @@ export default function Survey() {
   }, [currentAns]);
 
   return (
-      <Grid
-          container
-          spacing={{xs: 0, sm: 0, md: 0}}
-          columns={{xs: 2, sm: 8, md: 12}}
-          align="center"
-      >
-        <Grid item xs={12} sm={12} md={12}>
-          {dataLoad && !completeFlag && (
-          <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
-            <Grid align="center" style={{ height: "15vh" }}>
-              <h2>{currentQue.question}</h2>
+    <Grid
+      container
+      direction="column"
+      justifyContent="space-evenly"
+      alignItems="center"
+      spacing={{ xs: 0, sm: 0, md: 0 }}
+      columns={{ xs: 2, sm: 8, md: 12 }}
+      align="center"
+    >
+      <Grid item xs={12} sm={12} md={12}>
+        {dataLoad && !completeFlag && (
+          <Paper style={{ minHeight: "75vh", ...paperStyle }} elevation={10}>
+            <Grid item align="center">
+              <ThemeProvider theme={theme}>
+                <Typography variant="h3">{currentQue.question}</Typography>
+              </ThemeProvider>
             </Grid>
+            {currentQue.additional_info && (
+            <Grid item align="center">
+              <ThemeProvider theme={theme}>
+                <Typography variant="p">{currentQue.additional_info}</Typography>
+              </ThemeProvider>
+            </Grid>
+            )}
             <Grid
+              item
               container
               align="center"
               spacing={1}
-              style={{ height: "25vh" }}
+              // style={{ height: "25vh" }}
             >
               {currentQue.answer_template === "text" && (
                 <TextField
@@ -149,6 +184,7 @@ export default function Survey() {
                   direction="column"
                   justifyContent="flex-start"
                   alignItems="center"
+                  item
                 >
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
@@ -156,17 +192,16 @@ export default function Survey() {
                     onChange={(e) => setCurrentAns({ value: e.target.value })}
                     key={currentQue.question_id}
                   >
-                    {currentQue.answer_choices
-                      .map((choice, index) => {
-                        return (
-                          <FormControlLabel
-                            value={choice}
-                            key={index + Math.random()}
-                            control={<Radio />}
-                            label={choice}
-                          />
-                        );
-                      })}
+                    {currentQue.answer_choices.map((choice, index) => {
+                      return (
+                        <FormControlLabel
+                          value={choice}
+                          key={index + Math.random()}
+                          control={<Radio />}
+                          label={choice}
+                        />
+                      );
+                    })}
                   </RadioGroup>
                 </Grid>
               )}
@@ -176,12 +211,13 @@ export default function Survey() {
               direction="row"
               justifyContent="center"
               alignItems="center"
+              item
             >
               <Button
-                  onClick={gotoNextQue}
-                  variant="contained"
-                  disabled={disable}
-                  endIcon={<SendIcon/>}
+                onClick={gotoNextQue}
+                variant="contained"
+                disabled={disable}
+                endIcon={<SendIcon />}
               >
                 Continue
               </Button>
@@ -201,21 +237,21 @@ export default function Survey() {
           </Paper>
         )}
         {!dataLoad && !error && (
-          <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
+          // <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
             <Grid
-              container
+              item
               direction="row"
               justifyContent="center"
               alignItems="center"
             >
               <h1>Please wait for the survey to load.</h1>
             </Grid>
-          </Paper>
+          // </Paper>
         )}
         {error && (
           <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
             <Grid
-              container
+              item
               direction="row"
               justifyContent="center"
               alignItems="center"
