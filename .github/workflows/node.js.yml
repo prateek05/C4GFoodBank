@@ -33,5 +33,5 @@ jobs:
       working-directory: ./frontend/food_bank_survey/
     - run: npm run build --if-present
       working-directory: ./frontend/food_bank_survey/
-    - run: npm test --if-present
+    - run: npm test --if-present --passWithNoTests
       working-directory: ./frontend/food_bank_survey/
