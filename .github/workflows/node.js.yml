@@ -13,7 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./frontend/food_bank_survey
     strategy:
       matrix:
         node-version: [17.x]
@@ -26,6 +28,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
     - run: npm ci
       working-directory: ./frontend/food_bank_survey/
     - run: npm run build --if-present
