@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 import axios from "axios";
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Typography,
-} from "@mui/material";
+import {Button, FormControlLabel, Grid, Paper, Radio, RadioGroup, TextField, Typography,} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
@@ -131,6 +122,7 @@ export default function Survey() {
 
   useEffect(() => {
     initSurvey();
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     currentAns.value !== "" ? setDisable(false) : setDisable(true);
