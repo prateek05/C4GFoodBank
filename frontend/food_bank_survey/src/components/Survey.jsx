@@ -183,11 +183,11 @@ export default function Survey() {
                   container
                   direction="column"
                   justifyContent="flex-start"
-                  alignItems="center"
+                  align="left"
                   item
                 >
                   <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
+                    aria-labelledby="radio-answer-options"
                     name="radio-buttons-group"
                     onChange={(e) => setCurrentAns({ value: e.target.value })}
                     key={currentQue.question_id}
@@ -217,6 +217,7 @@ export default function Survey() {
                 onClick={gotoNextQue}
                 variant="contained"
                 disabled={disable}
+                style={{marginTop:'12px'}}
                 endIcon={<SendIcon />}
               >
                 Continue
