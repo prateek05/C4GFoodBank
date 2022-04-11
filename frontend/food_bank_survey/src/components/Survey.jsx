@@ -88,16 +88,16 @@ export default function Survey() {
     }
     api.post(campaignId + `/` + siteId, answer);
   };
-  const onLocSuccess = (location) => {
-    setLocation({
-      loaded: true,
-      error: false,
-      coords: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-      },
-    });
-  };
+  // const onLocSuccess = (location) => {
+  //   setLocation({
+  //     loaded: true,
+  //     error: false,
+  //     coords: {
+  //       lat: location.coords.latitude,
+  //       lng: location.coords.longitude,
+  //     },
+  //   });
+  // };
   const onLocError = (err) => {
     setLocation({
       loaded: true,
@@ -114,10 +114,11 @@ export default function Survey() {
   };
 
   useEffect(() => {
-    if (!("geolocation" in navigator)) {
-      onLocError("error");
-    }
-    navigator.geolocation.getCurrentPosition(onLocSuccess, onLocError);
+    // if (!("geolocation" in navigator)) {
+    //   onLocError("error");
+    // }
+    // navigator.geolocation.getCurrentPosition(onLocSuccess, onLocError);
+    onLocError("");
   }, []);
 
   useEffect(() => {
