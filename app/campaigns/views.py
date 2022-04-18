@@ -79,6 +79,7 @@ def survey(request, campaign_id, site_id) -> APIResponse:
             and is_valid_uuid(site_id)
         ):
             request_body = JSONParser().parse(request)
+            
             if (
                 "coordinates" in request_body
                 and request_body.get("coordinates") != ""
