@@ -6,25 +6,29 @@ from rest_framework.test import APIClient
 
 from campaigns.models import Question, Campaign
 from users.factory_models import AgencySiteFactory
-
+from unittest.mock import patch
 
 class TestGetSurvey(TestCase):
 
-    def test_get_campaign(self):
+    @patch("django.db.models.signals.ModelSignal.send")
+    def test_get_campaign(self, mocked_signal):
         site = AgencySiteFactory.create()
         client = APIClient()
         campaign = Campaign.objects.create(name="test", actor_type = "Client",active = True)
         campaign.sites.add(site)
         campaign.save()
+        mocked_signal.assert_called()
         response = client.get(reverse("survey", kwargs=dict(campaign_id=campaign.campaign_id,site_id=site.site_id)))
         assert response.status_code == status.HTTP_200_OK
     
-    def test_post_campaign(self):
+    @patch("django.db.models.signals.ModelSignal.send")
+    def test_post_campaign(self, mocked_signal):
         site = AgencySiteFactory.create()
         client = APIClient()
         campaign = Campaign.objects.create(name="test", actor_type = "Client",active = True)
         campaign.sites.add(site)
         campaign.save()
+        mocked_signal.assert_called()
         response = client.post(reverse("survey", kwargs=dict(campaign_id=campaign.campaign_id,site_id=site.site_id)), dict(language="en",value="value", coordinates=None), format="json")
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
