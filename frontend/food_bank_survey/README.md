@@ -1,4 +1,19 @@
-# Getting Started with Create React App
+# Food Bank Quality Survey ReactJS application
+
+This is a ReactJS web application that connects to the back-end APIs to bring the survey to the users. This application uses MaterialUI as the front end component styling library. 
+
+## Links to know
+    - https://reactjs.org/
+    - https://mui.com/
+
+## Important files
+The application landing page takes in both the campaign id and the site id and redirects the user to the survey. When scanning in a QR code, the survey does accept the link with these in parameters and loads the survey directly.
+    - `src/components/Survey.jsx` - This is the sole file that handles the survey components. Any future type of survey question types can be added here.
+
+## API calls
+The application loads the survey by from the back-end database using a GET API. For each question answered, the application submits the response to the back-end server - this is to make sure that, even if the user exits the survey without the final commit, there are responses available for any of the questions answered.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,3 +83,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
