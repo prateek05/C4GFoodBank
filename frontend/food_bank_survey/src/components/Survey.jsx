@@ -1,13 +1,22 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import {Button, FormControlLabel, Grid, Paper, Radio, RadioGroup, TextField, Typography,} from "@mui/material";
+import {
+  Button,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Survey() {
   const api = axios.create({
-    // baseURL: `https://22b386a2-2e76-45e8-8e4e-6cc4145b36d6.mock.pstmn.io/api/survey/`,
+    // TODO - In future, move the baseURL to an env file - making it a configuration, so that it is easy to make changes in different evironments.
 
     baseURL: `https://c4gfoodbank.azurewebsites.net/api/survey`,
   });
@@ -36,7 +45,7 @@ export default function Survey() {
       fontSize: "2rem",
     },
   };
- 
+
   const [campaign, setCampaign] = useState([]);
   const [currentQue, setCurrentQue] = useState({});
   const [currentQueNum, setCurrentQueNum] = useState(0);
@@ -125,8 +134,10 @@ export default function Survey() {
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
-    currentAns.value !== "" ? setDisable(false) : setDisable(true);
-  }, [currentAns]);
+    currentQue.answer_template === "text" || currentAns.value !== ""
+      ? setDisable(false)
+      : setDisable(true);
+  }, [currentAns, currentQue.answer_template]);
 
   return (
     <Grid
@@ -147,11 +158,13 @@ export default function Survey() {
               </ThemeProvider>
             </Grid>
             {currentQue.additional_info && (
-            <Grid item align="center">
-              <ThemeProvider theme={theme}>
-                <Typography variant="p">{currentQue.additional_info}</Typography>
-              </ThemeProvider>
-            </Grid>
+              <Grid item align="center">
+                <ThemeProvider theme={theme}>
+                  <Typography variant="p">
+                    {currentQue.additional_info}
+                  </Typography>
+                </ThemeProvider>
+              </Grid>
             )}
             <Grid
               item
@@ -209,7 +222,7 @@ export default function Survey() {
                 onClick={gotoNextQue}
                 variant="contained"
                 disabled={disable}
-                style={{marginTop:'12px'}}
+                style={{ marginTop: "12px" }}
                 endIcon={<SendIcon />}
               >
                 Continue
@@ -231,14 +244,14 @@ export default function Survey() {
         )}
         {!dataLoad && !error && (
           // <Paper style={{ height: "75vh", ...paperStyle }} elevation={10}>
-            <Grid
-              item
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <h1>Please wait for the survey to load.</h1>
-            </Grid>
+          <Grid
+            item
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <h1>Please wait for the survey to load.</h1>
+          </Grid>
           // </Paper>
         )}
         {error && (
