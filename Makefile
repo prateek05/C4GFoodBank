@@ -45,3 +45,6 @@ install:
 #view web container logs
 logs:
 	docker-compose logs -f  web
+#seed database
+seed:
+	docker-compose exec web python manage.py runscript seed_database
