@@ -13,14 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from campaigns import views as surveyViews
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import path, re_path
-from django.views.generic import TemplateView
+from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-
-from campaigns import views as surveyViews
 
 schema_url_patterns = [
     path(
@@ -40,6 +38,15 @@ schema_view = get_schema_view(
 def index(request):
     return render(request, "index.html")
 
+
+def manifest(request):
+    return render(request, "manifest.json", content_type='application/json')
+
+
+def logo192(request):
+    return render(request, "logo192.png", content_type="image/png")
+
+
 urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
     path("admin", admin.site.urls, name="admin"),
@@ -51,7 +58,9 @@ urlpatterns = [
     path(
         "api/survey/<str:campaign_id>/<str:site_id>", surveyViews.survey, name="survey"
     ),
-    re_path('.*', TemplateView.as_view(template_name='index.html')),
+    # re_path('manifest.json', manifest),
+    # re_path('logo192.png', logo192),
+    # re_path('.*', TemplateView.as_view(template_name='index.html')),
     # re_path(r"^$", index),
     # re_path(r"^(?:.*)/?$", index),
 ]

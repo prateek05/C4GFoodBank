@@ -9,8 +9,14 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import mimetypes
 import os
 from pathlib import Path
+
+# mimetypes.add_type("application/manifest+json", "manifest.json", True)
+WHITENOISE_MIMETYPES = {
+    '.json': 'application/json'
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,9 +165,12 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "django_static")
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "campaigns/admin"),
-    os.path.join(BASE_DIR, 'build', 'static'),  # update the STATICFILES_DIRS
+    os.path.join(BASE_DIR, 'build', 'static'),
+    os.path.join(BASE_DIR, 'build'),  # update the STATICFILES_DIRS
 )
 
+WHITENOISE_INDEX_FILE = True
+WHITENOISE_ROOT = STATIC_ROOT
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
