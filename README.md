@@ -40,7 +40,7 @@ This is a Python Django Survey application, which is dockerized to ensure consis
 
 ## Data Model
 
-![Data Model](app/Data_model_C4G.drawio.png)
+![Data Model](app/images/Data_model_C4G.drawio.png)
 
 ## Useful Commands (Need to run these commands at the project root)
 
