@@ -24,7 +24,7 @@ This is a Python Django Survey application, which is dockerized to ensure consis
 - Survey Routes: http://localhost:8000/survey/{campaign_id}/{site_id}
 
 ## Data Model 
-![Data Model](/app/Data_model_C4G.drawio.png)
+![Data Model](/app/images/Data_model_C4G.drawio.png)
 
 ## Useful Commands (Need to run these commands at the project root)
    - `make build` - Runs through the applications entire setup process
@@ -52,7 +52,25 @@ This is a Python Django Survey application, which is dockerized to ensure consis
 - `app/users` - Holds the user and agency site files
 
 ## Admin Features 
-- `Filtering`
-- `Campaign Question Ordering`
+![Home Screen](/app/images/home_screen.png)
+
 - `Response Exporting` The delimiter is a `|`
+
+![Entry Screen](/app/images/entry_screen.png)
+![Entry Values](/app/images/entry_values.png)
+
+- `Filtering`
+
+![Filtering Screen](/app/images/filter_screen.png)
+
+- `Campaign Question Ordering`
+
+![Many to Many Order](/app/images/many_to_many_order.png)
+![Many to Many](/app/images/many_to_many.png)
+
+
 - `Question, Campaign, Answer Choice Importing` The delimiter is a `|`
+
+![CSV Import](/app/images/csv_import.png)
+![CSV File Import](/app/images/csv_file_import.png)
+
